@@ -13,3 +13,5 @@ O que já está feito:
 - Fazer sistema de autenticação real onde só poderá assistir ao estar logado
 - Só poder assistir ao ser um usuário assinante
 - Salvar cartões de créditos de uma forma segura
+
+//testando a development
