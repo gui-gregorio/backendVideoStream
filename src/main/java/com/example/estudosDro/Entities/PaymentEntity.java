@@ -16,7 +16,7 @@ public class PaymentEntity {
     private String status;
     private String paymentMethod;
     private String transactionId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private UserEntity user;
 }
