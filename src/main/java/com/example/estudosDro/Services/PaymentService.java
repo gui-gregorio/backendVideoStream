@@ -26,7 +26,7 @@ public class PaymentService {
     public PaymentEntity processPayment(PaymentEntity paymentEntity){
         paymentEntity.setStatus("Pending");
         paymentEntity.setTransactionId("BRT" + System.currentTimeMillis());
-        PaymentEntity savedPayment = paymentRepository.save(paymentEntity); // Salva primeiro
+        PaymentEntity savedPayment = paymentRepository.save(paymentEntity);
         paymentProducer.sendMessage(savedPayment);
         return paymentEntity;
     }
