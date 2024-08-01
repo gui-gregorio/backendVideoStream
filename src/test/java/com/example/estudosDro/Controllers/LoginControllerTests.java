@@ -1,8 +1,9 @@
 package com.example.estudosDro.Controllers;
 
 
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.example.estudosDro.Controllers.LoginController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,19 +14,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LoginControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+public class LoginControllerTests extends ControllersBaseTests {
 
     @Test
     public void authenticationUserTest() throws Exception{
-        String validLoginJson = "{\"username\": \"gui\", \"password\": \"gui1998\"}";
         String invalidLoginJson = "{\"username\": \"abasdaaf\", \"password\": \"23214\"}";
-       mockMvc.perform(MockMvcRequestBuilders.post("/api/login")
-               .contentType(MediaType.APPLICATION_JSON)
-               .content(validLoginJson))
-               .andExpect(MockMvcResultMatchers.status().isOk());
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/login")
+        //testa apenas o invalido porque o valido já está sendo testado para pegar o token
+          mockMvc.perform(MockMvcRequestBuilders.post("/api/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidLoginJson))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError())
