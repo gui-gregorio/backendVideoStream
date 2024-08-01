@@ -1,6 +1,5 @@
 package com.example.estudosDro.Config;
 import com.example.estudosDro.Services.CustomUserDetailsService;
-import com.example.estudosDro.Services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

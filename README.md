@@ -16,6 +16,7 @@ Futuramente:
 - Fazer sistema de autenticação real onde só poderá assistir ao estar logado
 - Só poder assistir ao ser um usuário assinante (atualmente todos podem assistir)
 - Salvar cartões de créditos de uma forma segura
+- Testes unitários
 
 POST: /api/login:
 Parâmetros: usuário e senha
