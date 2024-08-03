@@ -2,6 +2,7 @@ package com.example.estudosDro.Controllers;
 
 
 import com.example.estudosDro.Entities.VideoEntity;
+import com.example.estudosDro.Services.StorageService;
 import com.example.estudosDro.Services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,11 +26,23 @@ import java.util.List;
 public class VideoController {
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private StorageService storageService;
     @PostMapping("/register")
     public ResponseEntity<VideoEntity> registerVideo(@RequestBody VideoEntity video){
         VideoEntity savedVideo = videoService.registerVideo(video);
         return ResponseEntity.ok(savedVideo);
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile (@RequestParam("file") MultipartFile file,
+                       RedirectAttributes redirectAttributes) {
+        storageService.store(file);
+        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename());
+        return ResponseEntity.ok("You successfully uploaded " + file.getOriginalFilename());
+    }
+
+
     private static final String VIDEO_FOLDER = "C:\\Users\\guibe\\OneDrive\\Área de Trabalho\\java";
     @GetMapping("/{id}")
     public ResponseEntity<Resource> streamVideo(@PathVariable Long id) throws IOException {
@@ -41,14 +56,13 @@ public class VideoController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentLength(resource.contentLength());
         headers.setContentDispositionFormData("inline", path.getFileName().toString());
-
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
+
 
     @GetMapping()
     public List<VideoEntity> getVideos(){
         return videoService.getVideos();
+
     }
-
-
 }
